@@ -10,6 +10,6 @@ const posts = [
 ];
 
 
-exports.getPosts = (req, res) => {
+export const getPosts = (req, res) => {
     res.json(posts)
 }

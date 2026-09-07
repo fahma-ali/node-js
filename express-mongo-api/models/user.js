@@ -1,7 +1,8 @@
-const mongoos = require('mongoose');
-const { Schema } = mongoos;
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 const userchemaShape = new Schema({
     name: String,
     email:String
 })
-module.exports = mongoos.model("User", userchemaShape);
+const users = mongoose.model("User", userchemaShape);
+export default users

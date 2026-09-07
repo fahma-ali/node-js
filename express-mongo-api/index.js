@@ -1,22 +1,22 @@
-const express = require('express');
-const PORT = process.env.PORT || 3000;
-const userRoute = require('./routes/users');
-const postRoute = require('./routes/post');
-require('dotenv').config();
-const cors = require('cors')
-const morgan = require('morgan');
-const mongoos = require('mongoose');
+import express from 'express';
+import userRoute from './routes/users.js';
+import postRoute from './routes/post.js';
+import cors from 'cors';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv'
+const PORT = process.env.PORT || 4000;
+dotenv.config();
+const app = express();
+//middle wire
+app.use(express.json())
 
 //connecting mongoos
-mongoos
-  .connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected locally"))
   .catch((err) => console.log(" ❌Connection error", err));
   
   
-const app = express();
-//middle wire
-app.use(express.json())
 // app.use(morgan('common'))
 // app.use(cors({
 //     origin:["http://localhost:5879","http://dugsiiye.com"]

@@ -1,13 +1,13 @@
 
-const user = require('../models/user');
-const User =require('../models/user')
+import User from '../models/user.js'
 
-exports.getUsers = async (req, res) => {
+
+export const getUsers = async (req, res) => {
     const users = await User.find();
     res.json(users)
 }
 
-exports.getSingleUser = async(req, res) => {
+export const getSingleUser = async(req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).send("User not found");
@@ -18,13 +18,13 @@ exports.getSingleUser = async(req, res) => {
   }
 }
 
-exports.createUser = async (req, res) => {
+export const createUser = async (req, res) => {
     console.log("req.body",req.body)
     const user = new User(req.body)
     const saved =  await user.save();
     res.status(201).json(saved)
 }
-exports.updateUsers = async (req, res) => {
+export const updateUsers = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await User.findByIdAndUpdate(id, req.body,{new:true});
@@ -37,7 +37,7 @@ exports.updateUsers = async (req, res) => {
  }
     
 }
-exports.deleteUser = async(req, res) => {
+export const deleteUser = async(req, res) => {
     try {
         const { id } = req.params;
         const user = await User.findByIdAndDelete(id);
