@@ -1,8 +1,8 @@
-export const errprHandler = (error, req, res, next) => {
-    const status = error.statusCode || 500;
+export const errprHandler = (err, req, res, next) => {
+    const status = err.statusCode || 500;
     res.status(status).json({
         success: false,
-        message: error.message,
+        message: err.message,
         status
     })
     

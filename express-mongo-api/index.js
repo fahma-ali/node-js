@@ -1,5 +1,6 @@
 import express from 'express';
 import userRoute from './routes/users.js';
+import authRoute from './routes/auth.js'
 import postRoute from './routes/post.js';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -29,6 +30,7 @@ mongoose.connect(process.env.MONGO_URI)
 //wuxu u shaqeeyaa sida diwaan galiye dadka kala hagaa
 app.use('/users', userRoute);
 app.use("/posts", postRoute);
+app.use('/auth', authRoute);
 //last ware must be
 app.use(notfound)
 app.use(errprHandler)
