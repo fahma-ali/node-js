@@ -3,29 +3,25 @@ import bcrypt from 'bcryptjs';
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-    },
+const userSchema = new mongoose.Schema({
+    name: String,
 
     email: {
         type: String,
-        required: true,
         unique: true,
     },
-
-    password: {
+    password: String,
+    role: {
         type: String,
-        required: true,
+        enum: ["user", "admin"] ,
+        default:"user"
+    
     }
 });
 
-// Hash password before saving
 userSchema.pre('save', async function () {
 
-    // Password was not modified
-    if (!this.isModified('password')) return next();
+    if (!this.isModified('password')) return;
 
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
@@ -33,12 +29,10 @@ userSchema.pre('save', async function () {
    
 });
 
-// Compare password
 userSchema.methods.comparePassword = function (inputPassword) {
     return bcrypt.compare(inputPassword, this.password);
 };
 
-// Prevent OverwriteModelError
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;

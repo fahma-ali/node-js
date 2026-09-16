@@ -8,11 +8,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true,
     },
-
     password: String,
+    role: {
+        type: String,
+        enum: ["user", "admin"] ,
+        default:"user"
+    
+    }
 });
 
-// Hash password before saving
 userSchema.pre("save", function (next) {
     const user = this;
 
@@ -36,12 +40,10 @@ userSchema.pre("save", function (next) {
     });
 });
 
-// Compare password
 userSchema.methods.comparePassword = function (inputPassword) {
     return bcrypt.compare(inputPassword, this.password);
 };
 
-// Prevent duplicate model
 const User =
     mongoose.models.User ||
     mongoose.model("User", userSchema);

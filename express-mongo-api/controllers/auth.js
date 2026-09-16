@@ -1,8 +1,8 @@
-import User from '../models/auth.js'
+import User from '../models/user.js'
 import { generateToken } from '../utils/generateToken.js';
 console.log("REGISTER START");
 export const register = async (req, res, next) => {
-    let { name, email, password } = req.body;
+    let { name, email, password,role } = req.body;
 
     try {
         email = email.toLowerCase();
@@ -10,7 +10,7 @@ export const register = async (req, res, next) => {
         if (exists) return res.status(400).json({
            message:"email already in use"
        })
-        const user = await User.create({ name, email, password });
+        const user = await User.create({ name, email, password,role });
         const token = generateToken(user._id);
         res.status(201).json({token})
     } catch (error) {
