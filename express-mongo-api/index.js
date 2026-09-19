@@ -4,6 +4,7 @@ import userRoute from './routes/users.js';
 import authRoute from './routes/auth.js'
 import postRoute from './routes/post.js';
 import adminRoute from "./routes/authorize.js"
+import uploadRoute from './routes/upload.js'
 import cors from 'cors';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
@@ -21,7 +22,7 @@ app.use(express.json())
 //custom middleware
 app.use(logger);
 //connecting mongoos
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("✅ MongoDB connected locally"))
   .catch((err) => console.log(" ❌Connection error", err));
   
@@ -36,6 +37,8 @@ app.use('/users', userRoute);
 app.use("/posts", postRoute);
 app.use('/auth', authRoute);
 app.use('/admin',adminRoute)
+app.use('/upload', uploadRoute)
+
 //last ware must be
 app.use(notfound)
 app.use(errprHandler)
