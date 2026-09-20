@@ -2,7 +2,7 @@ import User from '../models/user.js'
 import { generateToken } from '../utils/generateToken.js';
 console.log("REGISTER START");
 export const register = async (req, res, next) => {
-    let { name, email, password,role } = req.body;
+    let { name, email, password, role } = req.body;
 
     try {
         email = email.toLowerCase();
@@ -14,7 +14,7 @@ export const register = async (req, res, next) => {
         const token = generateToken(user._id);
         res.status(201).json({token})
     } catch (error) {
-        next();
+        next(error);
     
     }
         
